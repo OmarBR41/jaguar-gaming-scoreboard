@@ -1,0 +1,184 @@
+@font-face {
+	font-family: 'Anton';
+	src: url('../fonts/Anton-Regular.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+:root {
+	--yellow: #FF9900;
+	--red: #CC0D0D;
+	--blue: #085FE1;
+	--gray: #a7a7a7;
+	--whitey: #ffe6e6;
+}
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	font-family: 'Anton',
+		sans-serif;
+}
+
+body {
+	width: 100%;
+	background-color: #666;
+}
+
+p {
+	letter-spacing: 1px;
+}
+
+.board {
+	position: relative;
+	display: flex;
+	top: -100%;
+	width: 80vw;
+	max-width: 1280px;
+	min-height: 2rem;
+	margin: 20px auto 0;
+	padding: 4px 6px;
+	font-size: 1.5rem;
+	background-color: black;
+	color: white;
+	border: 3px solid var(--gray);
+	border-radius: 6px;
+}
+
+.brand {
+	position: relative;
+	width: 150px;
+}
+
+.left,
+.middle,
+.right {
+	--rotate: 30deg;
+
+	position: absolute;
+	top: -50%;
+	width: 40%;
+	height: 220%;
+	background-color: var(--yellow);
+	border: 2px solid black;
+	z-index: 5;
+}
+
+.left {
+	left: 0;
+	border-right: 0;
+	transform: translateX(0%) skewX(var(--rotate));
+}
+
+.middle {
+	width: 60%;
+	left: 50%;
+	border-left: 0;
+	border-right: 0;
+	transform: translateX(-50%);
+}
+
+.right {
+	left: 100%;
+	border-left: 0;
+	transform: translateX(-100%) skewX(calc(-1 * var(--rotate)));
+}
+
+.player {
+	position: relative;
+	display: flex;
+	align-items: center;
+	flex: 1;
+}
+
+.player::before {
+	content: '';
+	position: absolute;
+	top: 50%;
+	width: 50px;
+	height: 135%;
+	border-radius: 6px;
+	z-index: -1;
+}
+
+.player--1 {
+	padding-right: 2rem;
+}
+
+.player--1::before {
+	left: 0;
+	background-color: var(--red);
+	transform: translate(-65%, -50%);
+}
+
+.player--2 {
+	padding-left: 2rem;
+}
+
+.player--2::before {
+	right: 0;
+	background-color: var(--blue);
+	transform: translate(65%, -50%);
+}
+
+.character {
+	width: 1.5rem;
+	height: 1.5rem;
+	background: white;
+	border-radius: 50%;
+}
+
+.tag {
+	flex: 1;
+	min-height: 1.5em;
+	text-align: center;
+	white-space: nowrap;
+}
+
+.score-container {
+	--rotate: 15deg;
+
+	position: absolute;
+	top: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 40px;
+	background-color: var(--yellow);
+	border: 2px solid black;
+	border-radius: 2px;
+	padding: 0px 8px;
+	font-size: 1.25em;
+}
+
+.player--1 .score-container {
+	right: 0;
+	transform: translateY(-50%) skewX(calc(-1 * var(--rotate)));
+}
+
+.player--1 .score {
+	transform: skewX(var(--rotate));
+}
+
+.player--2 .score-container {
+	left: 0;
+	transform: translateY(-50%) skewX(var(--rotate));
+}
+
+.player--2 .score {
+	transform: skewX(calc(-1 * var(--rotate)));
+}
+
+.score {
+	min-height: 1.5em;
+	-webkit-text-stroke: 1px black;
+}
+
+.round {
+	position: absolute;
+	top: 160%;
+	left: 50%;
+	font-size: 1rem;
+	transform: translateX(-50%);
+}

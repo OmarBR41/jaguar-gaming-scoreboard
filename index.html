@@ -1,0 +1,303 @@
+<html>
+
+<head>
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8">
+  <script src="js/jquery-2.2.1.min.js" type="text/javascript" charset="utf-8"></script>
+  <script src="js/jstween-1.2.min.js" type="text/javascript" charset="utf-8"></script>
+
+  <script type="text/javascript">
+    var timestampOld;
+    var timestamp;
+
+    var pName1;
+    var pScore1;
+    var pName2;
+    var pScore2;
+    var mRound;
+
+    var xmlDoc;
+    var xhr = new XMLHttpRequest();
+
+    var animating = false;
+    var doUpdate = false;
+
+    function init() {
+      xhr.overrideMimeType('text/xml');
+
+      var timeout = this.window.setInterval(function () {
+        pollHandler();
+      }, 250);
+
+      $('#pName1').html('');
+      $('#pScore1').html('');
+
+      $('#pName2').html('');
+      $('#pScore2').html('');
+
+      $('#mRound').html('');
+
+      $('#board').tween({
+        top: {
+          start: '-100',
+          stop: '0',
+          units: 'px',
+          time: 0,
+          duration: 0.8,
+          effect: 'easeOut'
+        }
+      });
+
+      $.play();
+    }
+
+    function pollHandler() {
+      loadData();
+      if (timestamp != timestampOld) {
+        doUpdate = true;
+      }
+      if (!animating && doUpdate) {
+        updateBoard();
+      }
+    }
+
+    function loadData() {
+      xhr.open('GET', 'streamcontrol.xml');
+      xhr.send();
+      xhr.onreadystatechange = function () {
+        xmlDoc = xhr.responseXML;
+
+        pName1 = getValueFromTag(xmlDoc, 'pName1');
+        pName2 = getValueFromTag(xmlDoc, 'pName2');
+        pScore1 = getValueFromTag(xmlDoc, 'pScore1');
+        pScore2 = getValueFromTag(xmlDoc, 'pScore2');
+        mRound = getValueFromTag(xmlDoc, 'mRound');
+
+        timestampOld = timestamp;
+        timestamp = getValueFromTag(xmlDoc, 'timestamp');
+
+      }
+    }
+
+    function updateBoard() {
+      if ($('#pName1').html() != pName1) {
+        animating = true;
+        $('#pName1').tween({
+          left: {
+            start: 175,
+            stop: 275,
+            units: 'px',
+            time: 0,
+            duration: 0.5,
+            effect: 'easeIn'
+          },
+          opacity: {
+            start: 100,
+            stop: 0,
+            time: 0,
+            duration: 0.5,
+            effect: 'easeIn'
+          },
+          onStop: function () {
+            $('#pName1').html(pName1);
+          }
+        });
+
+        $('#pName1').tween({
+          left: {
+            start: 275,
+            stop: 175,
+            units: 'px',
+            time: 0.5,
+            duration: 0.5,
+            effect: 'easeOut'
+          },
+          opacity: {
+            start: 0,
+            stop: 100,
+            time: 0.5,
+            duration: 0.5,
+            effect: 'easeOut'
+          },
+          onStop: function () {
+            animating = false;
+          }
+        });
+      }
+
+      if ($('#pName2').html() != pName2) {
+        animating = true;
+        $('#pName2').tween({
+          left: {
+            start: 775,
+            stop: 675,
+            units: 'px',
+            time: 0,
+            duration: 0.5,
+            effect: 'easeIn'
+          },
+          opacity: {
+            start: 100,
+            stop: 0,
+            time: 0,
+            duration: 0.5,
+            effect: 'easeIn'
+          },
+          onStop: function () {
+            $('#pName2').html(pName2);
+          }
+        });
+
+        $('#pName2').tween({
+          left: {
+            start: 675,
+            stop: 775,
+            units: 'px',
+            time: 0.5,
+            duration: 0.5,
+            effect: 'easeOut'
+          },
+          opacity: {
+            start: 0,
+            stop: 100,
+            time: 0.5,
+            duration: 0.5,
+            effect: 'easeOut'
+          },
+          onStop: function () {
+            animating = false;
+          }
+        });
+      }
+
+      if ($('#pScore1').html() != pScore1) {
+        animating = true;
+        $('#pScore1').tween({
+          opacity: {
+            start: 100,
+            stop: 0,
+            time: 0,
+            duration: 0.5,
+            effect: 'easeIn'
+          },
+          onStop: function () {
+            $('#pScore1').html(pScore1);
+          }
+        });
+
+        $('#pScore1').tween({
+          opacity: {
+            start: 0,
+            stop: 100,
+            time: 0.5,
+            duration: 0.5,
+            effect: 'easeOut'
+          },
+          onStop: function () {
+            animating = false;
+          }
+        });
+      }
+
+      if ($('#pScore2').html() != pScore2) {
+        animating = true;
+        $('#pScore2').tween({
+          opacity: {
+            start: 100,
+            stop: 0,
+            time: 0,
+            duration: 0.5,
+            effect: 'easeIn'
+          },
+          onStop: function () {
+            $('#pScore2').html(pScore2);
+          }
+        });
+
+        $('#pScore2').tween({
+          opacity: {
+            start: 0,
+            stop: 100,
+            time: 0.5,
+            duration: 0.5,
+            effect: 'easeOut'
+          },
+          onStop: function () {
+            animating = false;
+          }
+        });
+      }
+
+      if ($('#mRound').html() != mRound) {
+        animating = true;
+        $('#mRound').tween({
+          opacity: {
+            start: 100,
+            stop: 0,
+            time: 0,
+            duration: 0.5,
+            effect: 'easeIn'
+          },
+          onStop: function () {
+            $('#mRound').html(mRound);
+          }
+        });
+
+        $('#mRound').tween({
+          opacity: {
+            start: 0,
+            stop: 100,
+            time: 0.5,
+            duration: 0.5,
+            effect: 'easeOut'
+          },
+          onStop: function () {
+            animating = false;
+          }
+        });
+      }
+
+      $.play();
+
+      doUpdate = false;
+    }
+
+    function getValueFromTag(xmlDoc, tag) {
+      if (xmlDoc.getElementsByTagName(tag).length != 0) {
+        if (xmlDoc.getElementsByTagName(tag)[0].childNodes.length == 0) {
+          return '';
+        } else {
+          return xmlDoc.getElementsByTagName(tag)[0].childNodes[0].nodeValue;
+        }
+      } else {
+        return '';
+      }
+    }
+  </script>
+</head>
+
+<body onLoad="init()">
+  <div id="board" class="board">
+    <div class="player player--1">
+      <span class="character"></span>
+      <p id="pName1" class="tag">Player 1</p>
+      <div class="score-container">
+        <p id="pScore1" class="score">0</p>
+      </div>
+    </div>
+    <div class="brand">
+      <div class="left"></div>
+      <div class="middle"></div>
+      <div class="right"></div>
+    </div>
+    <div class="player player--2">
+      <div class="score-container">
+        <p id="pScore2" class="score">0</p>
+      </div>
+      <p id="pName2" class="tag">Player 2</p>
+      <span class="character"></span>
+    </div>
+    <p id="mRound" class="round">Round</p>
+  </div>
+</body>
+
+</html>
