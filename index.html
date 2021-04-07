@@ -13,7 +13,7 @@
     var pScore1;
     var pName2;
     var pScore2;
-    var mRound;
+    var mText3;
 
     var xmlDoc;
     var xhr = new XMLHttpRequest();
@@ -34,7 +34,7 @@
       $('#pName2').html('');
       $('#pScore2').html('');
 
-      $('#mRound').html('');
+      $('#mText3').html('');
 
       $('#board').tween({
         top: {
@@ -70,7 +70,7 @@
         pName2 = getValueFromTag(xmlDoc, 'pName2');
         pScore1 = getValueFromTag(xmlDoc, 'pScore1');
         pScore2 = getValueFromTag(xmlDoc, 'pScore2');
-        mRound = getValueFromTag(xmlDoc, 'mRound');
+        mText3 = getValueFromTag(xmlDoc, 'mText3');
 
         timestampOld = timestamp;
         timestamp = getValueFromTag(xmlDoc, 'timestamp');
@@ -227,9 +227,9 @@
         });
       }
 
-      if ($('#mRound').html() != mRound) {
+      if ($('#mText3').html() != mText3) {
         animating = true;
-        $('#mRound').tween({
+        $('#mText3').tween({
           opacity: {
             start: 100,
             stop: 0,
@@ -238,11 +238,11 @@
             effect: 'easeIn'
           },
           onStop: function () {
-            $('#mRound').html(mRound);
+            $('#mText3').html(mText3);
           }
         });
 
-        $('#mRound').tween({
+        $('#mText3').tween({
           opacity: {
             start: 0,
             stop: 100,
@@ -296,7 +296,7 @@
       <p id="pName2" class="tag">Player 2</p>
       <span class="character"></span>
     </div>
-    <p id="mRound" class="round">Round</p>
+    <p id="mText3" class="round">Round</p>
   </div>
 </body>
 
