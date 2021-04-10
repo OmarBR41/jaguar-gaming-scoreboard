@@ -9,15 +9,24 @@
     var timestampOld;
     var timestamp;
 
+    // Player 1 tag, score and character
     var pName1;
     var pScore1;
+    var mText1;
+
+    // Player 2 tag, score and character
     var pName2;
     var pScore2;
+    var mText2;
+
+    // Current round
     var mText3;
 
+    // XML request
     var xmlDoc;
     var xhr = new XMLHttpRequest();
 
+    // Animation flags
     var animating = false;
     var doUpdate = false;
 
@@ -30,9 +39,13 @@
 
       $('#pName1').html('');
       $('#pScore1').html('');
+      $('#mText1').data("character", "");
+      $('#mText1').css("background-image", "url('')");
 
       $('#pName2').html('');
       $('#pScore2').html('');
+      $('#mText2').data("character", "");
+      $('#mText2').css("background-image", "url('')");
 
       $('#mText3').html('');
 
@@ -67,9 +80,13 @@
         xmlDoc = xhr.responseXML;
 
         pName1 = getValueFromTag(xmlDoc, 'pName1');
-        pName2 = getValueFromTag(xmlDoc, 'pName2');
         pScore1 = getValueFromTag(xmlDoc, 'pScore1');
+        mText1 = getValueFromTag(xmlDoc, 'mText1');
+
+        pName2 = getValueFromTag(xmlDoc, 'pName2');
         pScore2 = getValueFromTag(xmlDoc, 'pScore2');
+        mText2 = getValueFromTag(xmlDoc, 'mText2');
+
         mText3 = getValueFromTag(xmlDoc, 'mText3');
 
         timestampOld = timestamp;
@@ -227,6 +244,66 @@
         });
       }
 
+      if ($('#mText1').data('character') != mText1) {
+        animating = true;
+        $('#mText1').tween({
+          opacity: {
+            start: 100,
+            stop: 0,
+            time: 0,
+            duration: 0.5,
+            effect: 'easeIn'
+          },
+          onStop: function () {
+            $('#mText1').data('character', mText1);
+            $('#mText1').css("background-image", "url('images/" + mText1 + ".png')");
+          }
+        });
+
+        $('#mText1').tween({
+          opacity: {
+            start: 0,
+            stop: 100,
+            time: 0.5,
+            duration: 0.5,
+            effect: 'easeOut'
+          },
+          onStop: function () {
+            animating = false;
+          }
+        });
+      }
+
+      if ($('#mText2').data('character') != mText2) {
+        animating = true;
+        $('#mText2').tween({
+          opacity: {
+            start: 100,
+            stop: 0,
+            time: 0,
+            duration: 0.5,
+            effect: 'easeIn'
+          },
+          onStop: function () {
+            $('#mText2').data('character', mText2);
+            $('#mText2').css("background-image", "url('images/" + mText2 + ".png')");
+          }
+        });
+
+        $('#mText2').tween({
+          opacity: {
+            start: 0,
+            stop: 100,
+            time: 0.5,
+            duration: 0.5,
+            effect: 'easeOut'
+          },
+          onStop: function () {
+            animating = false;
+          }
+        });
+      }
+
       if ($('#mText3').html() != mText3) {
         animating = true;
         $('#mText3').tween({
@@ -278,7 +355,9 @@
 <body onLoad="init()">
   <div id="board" class="board">
     <div class="player player--1">
-      <span class="character"></span>
+      <div class="character-container">
+        <div id="mText1" class="character" data-character=""></div>
+      </div>
       <p id="pName1" class="tag">Player 1</p>
       <div class="score-container">
         <p id="pScore1" class="score">0</p>
@@ -294,7 +373,9 @@
         <p id="pScore2" class="score">0</p>
       </div>
       <p id="pName2" class="tag">Player 2</p>
-      <span class="character"></span>
+      <div class="character-container">
+        <div id="mText2" class="character" data-character=""></div>
+      </div>
     </div>
     <p id="mText3" class="round">Round</p>
   </div>
